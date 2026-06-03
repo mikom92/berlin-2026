@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berlin 4–6 cze 2026</title>
+  <style>
+    :root {
+      --black: #111111;
+      --yellow: #FFD600;
+      --red: #e63946;
+      --grey: #f4f4f4;
+      --mid: #666;
+      --border: #e2e2e2;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--grey);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--black);
+      color: white;
+      padding: 2rem 1.5rem 1.75rem;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .header h1 em {
+      color: var(--yellow);
+      font-style: normal;
+    }
+
+    .header .tagline {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .meta-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .meta-chip {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+    }
+
+    .meta-chip .lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .meta-chip .val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: white;
+      margin-top: 0.15rem;
+    }
+
+    .meta-chip .val.hl { color: var(--yellow); }
+
+    /* ── NAV ── */
+    .nav {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      overflow-x: auto;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav button {
+      padding: 0.9rem 1.4rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--mid);
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s;
+      letter-spacing: 0.3px;
+    }
+
+    .nav button.active {
+      color: var(--black);
+      border-bottom-color: var(--yellow);
+    }
+
+    .nav button:hover:not(.active) {
+      color: var(--black);
+      background: #fafafa;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── DAY HEADER ── */
+    .day-hdr {
+      margin-bottom: 1.25rem;
+    }
+
+    .day-hdr h2 {
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    .day-hdr .sub {
+      color: var(--mid);
+      font-size: 0.875rem;
+      margin-top: 0.2rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-yellow { background: var(--yellow); color: var(--black); }
+    .badge-dark   { background: var(--black); color: white; }
+
+    /* ── ACTIVITY CARD ── */
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.9rem;
+      border: 1px solid var(--border);
+    }
+
+    .card-time {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--mid);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .card-body {
+      font-size: 0.855rem;
+      color: #3a3a3a;
+      line-height: 1.65;
+    }
+
+    .card-body strong { color: var(--black); }
+
+    .card-body a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card-body a:hover { text-decoration: underline; }
+
+    /* tags */
+    .tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-must  { background: #fff3e0; color: #bf360c; }
+    .tag-free  { background: #e8f5e9; color: #1b5e20; }
+    .tag-food  { background: #fce4ec; color: #880e4f; }
+    .tag-book  { background: #fff8e1; color: #f57f17; }
+    .tag-exp   { background: #ede7f6; color: #311b92; }
+    .tag-car   { background: #e3f2fd; color: #0d47a1; }
+
+    /* map links */
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.8rem;
+    }
+
+    .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.28rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      letter-spacing: 0.2px;
+    }
+
+    .link:hover { opacity: 0.75; }
+    .link-g { background: #e8f0fe; color: #1a73e8; }
+    .link-w { background: #e0f2f1; color: #00695c; }
+    .link-r { background: #fce4ec; color: #b71c1c; }
+
+    /* info boxes */
+    .tip {
+      background: #fffde7;
+      border-left: 4px solid var(--yellow);
+      padding: 0.7rem 1rem;
+      border-radius: 0 10px 10px 0;
+      margin: 0.85rem 0;
+      font-size: 0.84rem;
+      color: #4e3a00;
+      line-height: 1.6;
+    }
+
+    .warn {
+      background: #ffebee;
+      border-left: 4px solid var(--red);
+      padding: 0.7rem 1rem;
+      border-radius: 0 10px 10px 0;
+      margin: 0.85rem 0;
+      font-size: 0.84rem;
+      color: #7f0000;
+      line-height: 1.6;
+    }
+
+    /* ── PRACTICAL ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .info-card h3 {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--mid);
+      margin-bottom: 0.7rem;
+    }
+
+    .info-card p, .info-card li {
+      font-size: 0.855rem;
+      color: #3a3a3a;
+      line-height: 1.7;
+    }
+
+    .info-card ul { padding-left: 1.1rem; }
+
+    .info-card a {
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .dist-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.38rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.855rem;
+    }
+
+    .dist-row:last-child { border-bottom: none; }
+
+    .dbadge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.12rem 0.5rem;
+      border-radius: 10px;
+    }
+
+    .dg { background: #e8f5e9; color: #1b5e20; }
+    .dy { background: #fff8e1; color: #e65100; }
+    .dr { background: #ffebee; color: #b71c1c; }
+
+    /* ── CHECKLIST ── */
+    .cl-stats {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.84rem;
+    }
+
+    .cl-done { color: #1b5e20; font-weight: 800; }
+    .cl-left { color: #b71c1c; font-weight: 800; }
+
+    .progress {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--yellow);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .ci {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .ci:last-of-type { border-bottom: none; }
+
+    .ci input[type="checkbox"] {
+      margin-top: 0.18rem;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--black);
+      flex-shrink: 0;
+    }
+
+    .ci label {
+      font-size: 0.86rem;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .ci.done label { text-decoration: line-through; color: var(--mid); }
+
+    .ci .note {
+      display: block;
+      font-size: 0.77rem;
+      color: var(--mid);
+      margin-top: 0.1rem;
+    }
+
+    .req {
+      display: inline-block;
+      font-size: 0.66rem;
+      background: #ffebee;
+      color: #b71c1c;
+      font-weight: 800;
+      padding: 0.1rem 0.4rem;
+      border-radius: 10px;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+    }
+
+    .clear-btn {
+      margin-top: 0.8rem;
+      padding: 0.45rem 1rem;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.79rem;
+      color: var(--mid);
+      font-weight: 600;
+    }
+
+    .clear-btn:hover { background: #e0e0e0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--mid);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 580px) {
+      .header h1 { font-size: 1.7rem; }
+      .main { padding: 1rem 1rem 3rem; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="header">
+  <div class="header-top">
+    <h1>Berlin · <em>4–6 cze 2026</em></h1>
+  </div>
+  <p class="tagline">Solo. Autem. Ekspozycja ready.</p>
+
+  <div class="meta-grid">
+    <div class="meta-chip">
+      <div class="lbl">Wyjazd</div>
+      <div class="val">4 cze · ~7:00 WAW</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Trasa</div>
+      <div class="val">A2 → ~575 km · ~5,5h</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Nocleg</div>
+      <div class="val hl">STAYERY Friedrichshain</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Check-in / out</div>
+      <div class="val">4 cze 15:00 / 6 cze 11:00</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Booking ID</div>
+      <div class="val">#LGTHGUKH</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Koszt noclegu</div>
+      <div class="val hl">€246 + €16.21 city tax</div>
+    </div>
+    <div class="meta-chip">
+      <div class="lbl">Adres</div>
+      <div class="val">Holteistraße 20, 10245 Berlin</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <button class="active" onclick="show('czw4', this)">czw 4</button>
+  <button onclick="show('pt5', this)">pt 5</button>
+  <button onclick="show('sob6', this)">sob 6</button>
+  <button onclick="show('praktyczne', this)">Praktyczne</button>
+  <button onclick="show('checklist', this)">✓ Checklista</button>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="main">
+
+  <!-- ──────── CZWARTEK ──────── -->
+  <section id="czw4" class="section active">
+    <div class="day-hdr">
+      <h2>Czwartek, 4 czerwca · przyjazd</h2>
+      <p class="sub">WAW → Berlin · ~5,5h · wyjazd ~7:00 rano</p>
+      <span class="badge badge-dark">🚗 A2 → Frankfurt (Oder) → A12 → A10 → Friedrichshain</span>
+    </div>
+
+    <div class="card">
+      <div class="card-time">~7:00</div>
+      <div class="card-title">Wyjazd z Warszawy <span class="tag tag-car">jazda</span></div>
+      <div class="card-body">
+        Tankuj do pełna w Warszawie — paliwo w Niemczech ~8.50 PLN/L vs ~6.20 PLN w Polsce.<br><br>
+        <strong>Pierwsze miasto w Niemczech: Frankfurt (Oder).</strong> Jedyna stacja której potrzebujesz:<br><br>
+        🔧 <strong>DEKRA Automobil GmbH Frankfurt (Oder)</strong><br>
+        Perleberger Str. 6, 15234 Frankfurt (Oder)<br>
+        Tel: 0335/6846-0 · czynne czwartek <strong>08:00–17:00</strong><br>
+        Naklejka Feinstaubplakette (~10€) bez umówienia wizyty. Lexus CT 200h 2020 = zielona bez problemu. Bez naklejki w Berlinie = <strong>mandat 80€</strong>.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?saddr=Warszawa&daddr=Holteistra%C3%9Fe+20,+10245+Berlin" target="_blank">📍 Trasa do Stayery</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Perleberger+Str.+6,+15234+Frankfurt+Oder" target="_blank">🔧 DEKRA Frankfurt (Oder)</a>
+        <a class="link link-w" href="https://waze.com/ul?q=Perleberger+Str+6+Frankfurt+Oder&navigate=yes" target="_blank">🚗 Waze do DEKRA</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">~12:30 – 15:00</div>
+      <div class="card-title">Przyjazd · zameldowanie</div>
+      <div class="card-body">
+        Check-in oficjalnie od 15:00 — jeśli przyjedziesz wcześniej, możesz zostawić bagaże w recepcji i wyjść.<br><br>
+        Kod wejścia dostaniesz mailem/SMS dzień wcześniej — wejście jest <strong>w pełni bezkontaktowe</strong>. Hostowie są na miejscu w dzień i znają dzielnicę.<br><br>
+        💳 <strong>City Tax €16.21</strong> płatne przy zameldowaniu.<br>
+        🚗 <strong>Parking €30</strong> za 2 noce — już opłacony. Poinformuj o numerze rejestracyjnym.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Holteistra%C3%9Fe+20,+10245+Berlin" target="_blank">📍 STAYERY Friedrichshain</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">15:00 – 18:00</div>
+      <div class="card-title">Boxhagener Platz — pierwsze wrażenie <span class="tag tag-must">must</span></div>
+      <div class="card-body">
+        "Boxi" jest dosłownie 2 minuty pieszo od Stayery — jeden z najfajniejszych placów w Berlinie. Niezależne kawiarnie, vintage shopy, lokale bez turystycznej nakładki. Rozejrzyj się po okolicy, wejdź w klimat Friedrichshain.<br><br>
+        Polecana kawa: <strong>Viertel Vor</strong> lub <strong>Cupcake Berlin</strong> przy placu.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Boxhagener+Platz+Berlin+Friedrichshain" target="_blank">📍 Boxhagener Platz</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">18:00 – 19:30</div>
+      <div class="card-title">Spacer: RAW-Gelände <span class="tag tag-free">bezpłatne</span></div>
+      <div class="card-body">
+        10 minut pieszo od Stayery — kompleks na starych torach kolejowych. Bary, graffiti, skatepark, venue muzyczne. Dobry sposób na pierwsze poznanie charakteru Friedrichshain bez żadnego planu.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=RAW+Gel%C3%A4nde+Berlin+Friedrichshain" target="_blank">📍 RAW-Gelände</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">19:30 – 21:30</div>
+      <div class="card-title">Kolacja: Prater Garten <span class="tag tag-food">jedzenie</span></div>
+      <div class="card-body">
+        Najstarszy ogród piwny w Berlinie (od 1837). ~15 min pieszo od Stayery w kierunku Prenzlauer Berg. Duże kufle, sznycel, kiełbaski pod kasztanami — idealny pierwszy wieczór solo, nikt nie pyta dlaczego siedzisz sam, wszyscy są tu z kuflem.<br><br>
+        W środku tygodnia bez rezerwacji. Otwarte do ok. 23:00.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Prater+Garten+Berlin+Prenzlauer+Berg" target="_blank">📍 Prater Garten</a>
+        <a class="link link-r" href="https://pratergarten.de" target="_blank">🌐 Strona</a>
+      </div>
+    </div>
+
+    <div class="tip">
+      💡 <strong>Dziś wieczór:</strong> Zarezerwuj wejście na Fernsehturm online (jutro rano). Piątek = popularny, godziny 12:00–14:00 wyprzedają się. <a href="https://tv-turm.de/en/tickets" target="_blank">tv-turm.de →</a>
+    </div>
+  </section>
+
+  <!-- ──────── PIĄTEK ──────── -->
+  <section id="pt5" class="section">
+    <div class="day-hdr">
+      <h2>Piątek, 5 czerwca · główny dzień</h2>
+      <p class="sub">East Side Gallery · Fernsehturm · Brandenburger Tor · nocne życie</p>
+    </div>
+
+    <div class="card">
+      <div class="card-time">8:00 – 11:00</div>
+      <div class="card-title">Praca zdalna — Stayery lub biuro Snowflake <span class="tag tag-exp">remote work</span></div>
+      <div class="card-body">
+        Stayery ma świetne biurko, szybkie Wi-Fi i ciche pokoje — idealne na poranny blok pracy zdalnej przed wyjściem.<br><br>
+        Alternatywa: <strong>biuro Snowflake Berlin</strong> — Leipziger Platz 18, 10117 Berlin (Mitte). Engineering Hub, ~25 min od Stayery tramwajem. Jeśli masz możliwość wpaść jako pracownik/gość — to dosłownie 5 min pieszo od Brandenburger Tor. Umów się z lokalnym teamem wcześniej.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Leipziger+Platz+18,+10117+Berlin" target="_blank">📍 Snowflake Berlin — Leipziger Platz 18</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">9:00 – 9:45</div>
+      <div class="card-title">Śniadanie: Zeit für Brot</div>
+      <div class="card-body">
+        Jedna z najsłynniejszych berlińskich piekarni — słynne <strong>cinnamon rolls</strong> (~3.50€), świeże pieczywo, specialty kawa. Kilka lokalizacji w mieście, najbliższe do trasy dnia.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Zeit+f%C3%BCr+Brot+Berlin" target="_blank">📍 Zeit für Brot</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">10:00 – 11:30</div>
+      <div class="card-title">East Side Gallery <span class="tag tag-free">bezpłatne</span> <span class="tag tag-must">must</span></div>
+      <div class="card-body">
+        1,3 km murali na największym zachowanym fragmencie Muru Berlińskiego — 2,4 km od Stayery (tramwaj lub pieszo ~25 min). Zewnętrzna galeria, otwarta 24/7.<br><br>
+        Najsłynniejszy mural: <strong>"Fraternal Kiss"</strong> — Breżniew całuje Honeckera. Na końcu galerii — <strong>Oberbaumbrücke</strong>: neogotycki most z wieżyczkami nad Sprewą, jedno z najfotogenicznych miejsc w Berlinie.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=East+Side+Gallery+Berlin" target="_blank">📍 East Side Gallery</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Oberbaumbr%C3%BCcke+Berlin" target="_blank">📍 Oberbaumbrücke</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">12:00 – 13:30</div>
+      <div class="card-title">Fernsehturm — Wieża TV <span class="tag tag-must">must</span> <span class="tag tag-book">rezerwuj!</span></div>
+      <div class="card-body">
+        368 m, widok z 204 m na całe miasto. Jeden z najbardziej rozpoznawalnych symboli Berlina i NRD-u.<br><br>
+        <strong>Bilety: ~€25.50</strong> — warto kupić online, w peak season kolejki są długie.<br><br>
+        <strong>Alexanderplatz</strong> tuż obok — fontanna Neptuna (1891), Rotes Rathaus (czerwony ratusz), tętniący ruch. Klimat dawnego Berlina Wschodniego.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Fernsehturm+Berlin+Alexanderplatz" target="_blank">📍 Fernsehturm</a>
+        <a class="link link-r" href="https://tv-turm.de/en/tickets" target="_blank">🎟️ Kup bilet online</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">13:30 – 14:30</div>
+      <div class="card-title">Lunch: Currywurst <span class="tag tag-food">jedzenie</span></div>
+      <div class="card-body">
+        <strong>Konnopke's Imbiss</strong> — legendarny Currywurst w Prenzlauer Berg, od 1930. Kiełbasa z sosem curry i ketchupem, podawana z frytkami. Ok. 4–5€. Obowiązkowy punkt każdej berlińskiej wizyty.<br><br>
+        Alternatywa centrum: <strong>Curry 36</strong> w Kreuzbergu — równie kultowy, dłużej otwarty.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Konnopke%27s+Imbiss+Berlin+Prenzlauer+Berg" target="_blank">📍 Konnopke's Imbiss</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Curry+36+Berlin+Kreuzberg" target="_blank">📍 Curry 36 (Kreuzberg)</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">15:00 – 16:30</div>
+      <div class="card-title">Brandenburger Tor + Memorial Holocaustu <span class="tag tag-free">bezpłatne</span></div>
+      <div class="card-body">
+        <strong>Brama Brandenburska</strong> — symbol zjednoczenia Niemiec. Plac zawsze otwarty, wejście bezpłatne. Najlepsze zdjęcia o tej godzinie (słońce z przodu).<br><br>
+        <strong>Denkmal für die ermordeten Juden Europas</strong> — 2711 betonowych steli o różnej wysokości. Jedne z najbardziej poruszających pomników na świecie. Tuż za Bramą, 5 min pieszo. Centrum dokumentacji poniżej (~€5) — opcjonalnie.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Brandenburger+Tor+Berlin" target="_blank">📍 Brandenburger Tor</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Holocaust+Memorial+Berlin" target="_blank">📍 Memorial Holocaustu</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">17:00 – 18:30</div>
+      <div class="card-title">Topografia Terroru <span class="tag tag-free">bezpłatne</span></div>
+      <div class="card-body">
+        Muzeum na terenie dawnej siedziby Gestapo i SS — jedna z najlepszych bezpłatnych ekspozycji historycznych w Europie. Zewnętrzna część wzdłuż fragmentu Muru, wewnętrzna dokumentacja. Czynne do 20:00 w sezonie.<br><br>
+        Można przejść w 45 min (zewnętrzna) lub 1,5h (pełna).
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Topographie+des+Terrors+Berlin" target="_blank">📍 Topografia Terroru</a>
+        <a class="link link-r" href="https://www.topographie.de" target="_blank">🌐 Strona</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">19:30 – late</div>
+      <div class="card-title">Wieczór solo w Friedrichshain <span class="tag tag-exp">ekspozycja</span></div>
+      <div class="card-body">
+        Wróć do swojej dzielnicy i wyjdź do baru/klubu. To jest ten konkretny punkt na liście.<br><br>
+        <strong>🎵 Opcja klubowa (rekomendacja):</strong><br>
+        · <strong>Club der Visionäre</strong> (Kreuzberg/Treptow) — najlepszy start. Bar i mały klub na drewnianym pomoście nad kanałem, dosłownie kilka centymetrów nad wodą. House i techno, kameralne, bardzo berliński klimat ale zero intimidacji. W czerwcu świetny ogród wodny. Wejście wolne lub max ~5€. Czynny od ~18:00 — można wpaść wcześniej na drinka, zostać do rana.<br>
+        · <strong>OXI</strong> (Friedrichshain, ~10 min od Stayery) — klub z open-air tarasem, elektronika, inclusive i welcoming. Jeden z łatwiejszych wejść w Berlinie. Dobry wybór jeśli chcesz tańczyć.<br>
+        · <strong>Cassiopeia</strong> (RAW-Gelände, 10 min pieszo) — bar na powietrzu, skatepark, live music. Luźniej niż Club der Visionäre, mniej "klubowo".<br><br>
+        <strong>Jedzenie wieczór:</strong> <strong>Mustafa's Gemüse Kebap</strong> (Kreuzberg, kolejka ~30 min, ale warto — kozi ser, cytryna, własne sosy). Albo döner przy Boxi.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Club+der+Vision%C3%A4re+Berlin" target="_blank">📍 Club der Visionäre ⭐</a>
+        <a class="link link-g" href="https://maps.google.com/?q=OXI+Berlin+Friedrichshain" target="_blank">📍 OXI Club</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Cassiopeia+Club+Berlin" target="_blank">📍 Cassiopeia</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Mustafa%27s+Gem%C3%BCse+Kebap+Berlin" target="_blank">📍 Mustafa's Kebap</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────── SOBOTA ──────── -->
+  <section id="sob6" class="section">
+    <div class="day-hdr">
+      <h2>Sobota, 6 czerwca · Classic Remise + powrót</h2>
+      <p class="sub">Check-out 11:00 · Classic Remise · wyjazd ~14:30</p>
+      <span class="badge badge-yellow">🚗 BER → WAW · ~5,5h · w domu ~20:00</span>
+    </div>
+
+    <div class="card">
+      <div class="card-time">8:00 – 9:30</div>
+      <div class="card-title">Boxhagener Platz Flohmarkt <span class="tag tag-free">bezpłatne</span></div>
+      <div class="card-body">
+        W soboty od 8:00 — pchli targ tuż pod nosem. Vintage, vinyle, design, ciuchy, gadżety. Jeden z fajniejszych flohmarktów Berlina, nie tak turystyczny jak Mauerpark. Kawa na wynos z którejs z kawiarni przy placu.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Boxhagener+Platz+Flohmarkt+Berlin" target="_blank">📍 Boxhagener Platz Flohmarkt</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">9:30 – 11:00</div>
+      <div class="card-title">Ostatnia kawa + check-out</div>
+      <div class="card-body">
+        Spakuj się i opuść pokój do <strong>11:00</strong>. Bagaże do auta (parking przy Stayery).<br><br>
+        Możesz zapytać recepcję o <strong>late checkout do 12:00</strong> — bywa, że dają za darmo przy wolnych pokojach.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">11:00 – 13:30</div>
+      <div class="card-title">Classic Remise Berlin <span class="tag tag-must">MUST</span> <span class="tag tag-free">bezpłatne</span></div>
+      <div class="card-body">
+        <strong>Powód wyjazdu nr 1.</strong> Muzeum klasycznych samochodów w zabytkowej okrągłej zajezdni tramwajowej z 1900 roku — unikalna architektura industrialna.<br><br>
+        Ponad 100 egzemplarzy klasy premium: Porsche, Mercedes, Ferrari, BMW, Bugatti, Rolls-Royce. Część na sprzedaż, część wystawowa, wszystko w idealnym stanie. Wejście bezpłatne.<br><br>
+        <strong>Godziny:</strong> Wt–Nd 10:00–18:00 · <strong>Lokalizacja:</strong> Moabit, ~20 min autem od Stayery.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Classic+Remise+Berlin+Moabit+Wiebestr" target="_blank">📍 Classic Remise, Moabit</a>
+        <a class="link link-r" href="https://www.classicremise.de" target="_blank">🌐 classicremise.de</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">13:30 – 14:30</div>
+      <div class="card-title">Lunch + Tiergarten <span class="tag tag-food">jedzenie</span></div>
+      <div class="card-body">
+        Classic Remise jest przy granicy Tiergartenu — zjedz coś w okolicy i wpadnij w park na 20 minut.<br><br>
+        <strong>Siegessäule</strong> (Kolumna Zwycięstwa, 67m) jest 5 min autem — podjechać, spojrzeć, jechać dalej. Bez wchodzenia mieści się w 10 minutach.<br><br>
+        Restauracja w okolicy: <strong>Café am Neuen See</strong> w parku — jezioro, ogród piwny, szybki lunch.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?q=Siegess%C3%A4ule+Berlin+Tiergarten" target="_blank">📍 Siegessäule</a>
+        <a class="link link-g" href="https://maps.google.com/?q=Caf%C3%A9+am+Neuen+See+Berlin+Tiergarten" target="_blank">📍 Café am Neuen See</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-time">~14:30</div>
+      <div class="card-title">Wyjazd na autostradę <span class="tag tag-car">jazda</span></div>
+      <div class="card-body">
+        Z okolic Tiergartenu/Moabit → A100 → A10 → A12 → granica PL → A2 → Warszawa.<br><br>
+        <strong>Zatankuj do pełna przed granicą</strong> — paliwo w Polsce jest ~2.30 PLN/L tańsze.<br><br>
+        Planowany przyjazd do Warszawy: ~20:00–20:30.
+      </div>
+      <div class="links">
+        <a class="link link-g" href="https://maps.google.com/?saddr=Classic+Remise+Berlin&daddr=Warszawa,+Poland" target="_blank">📍 Trasa do Warszawy</a>
+        <a class="link link-w" href="https://waze.com/ul?q=Warszawa+Polska&navigate=yes" target="_blank">🚗 Waze do domu</a>
+      </div>
+    </div>
+
+    <div class="tip">
+      ⏱️ <strong>Czas w Berlinie:</strong> wyjazd 14:30 → Warszawa ~20:00. Zrób przerwę na kawę i tankowanie ok. 2h od granicy.
+    </div>
+  </section>
+
+  <!-- ──────── PRAKTYCZNE ──────── -->
+  <section id="praktyczne" class="section">
+    <div class="day-hdr">
+      <h2>Informacje praktyczne</h2>
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-card">
+        <h3>🏨 Stayery Berlin Friedrichshain</h3>
+        <p><strong>Adres:</strong> Holteistraße 20, 10245 Berlin</p>
+        <p><strong>Booking ID:</strong> #LGTHGUKH</p>
+        <p><strong>Check-in:</strong> od 15:00 · bezkontaktowy (kod na maila)</p>
+        <p><strong>Check-out:</strong> do 11:00 (zapytaj o 12:00)</p>
+        <p><strong>Parking:</strong> na miejscu, €15/noc = <strong>€30 za 2 noce</strong> — opłacone</p>
+        <p><strong>City Tax:</strong> €16.21 gotówką/kartą przy meldowaniu</p>
+        <p><strong>Wi-Fi:</strong> bezpłatne · <strong>Pralnia:</strong> 24/7 w budynku</p>
+      </div>
+
+      <div class="info-card">
+        <h3>🚗 Trasa i koszty</h3>
+        <p><strong>Dystans:</strong> ~575 km w jedną stronę</p>
+        <p><strong>Czas:</strong> ~5,5h (bez korków)</p>
+        <p><strong>Trasa:</strong> A2 Warszawa → Poznań → Frankfurt (Oder) → A12 → A10 Berliner Ring → A100 → Friedrichshain</p>
+        <p style="margin-top:0.5rem;"><strong>Autostrady PL:</strong> ~55 PLN (A2)</p>
+        <p><strong>Autostrady DE:</strong> <span style="color:#1b5e20; font-weight:700;">BEZPŁATNE dla aut osobowych!</span></p>
+        <p><strong>Paliwo (cały trip):</strong> ~513 PLN</p>
+      </div>
+
+      <div class="info-card">
+        <h3>⚠️ Umweltzone — koniecznie</h3>
+        <div class="warn" style="margin-top:0;">
+          Cały Berlin = strefa ekologiczna. Bez naklejki = mandat <strong>80€</strong>.
+        </div>
+        <p><strong>Lexus CT 200h 2020</strong> → Euro 6 → <span style="color:#1b5e20; font-weight:700;">zielona naklejka ✅</span></p>
+        <p style="margin-top:0.6rem;"><strong>DEKRA Frankfurt (Oder)</strong> — zatrzymaj się po drodze:<br>
+        📍 Perleberger Str. 6, 15234 Frankfurt (Oder)<br>
+        📞 0335/6846-0<br>
+        ⏰ Czwartek: 08:00–17:00<br>
+        ~10€ · bez umówienia wizyty</p>
+        <p style="margin-top:0.5rem;">Online (jeśli wolisz): <a href="https://www.umweltplakette.de" target="_blank">umweltplakette.de</a></p>
+        <div style="margin-top:0.7rem;">
+          <a class="link link-g" href="https://maps.google.com/?q=Perleberger+Str.+6,+15234+Frankfurt+Oder" target="_blank" style="font-size:0.78rem; padding:0.28rem 0.7rem;">📍 DEKRA na mapie</a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>⏱️ Odległości od Stayery</h3>
+        <div class="dist-row"><span>Boxhagener Platz</span><span class="dbadge dg">2 min pieszo</span></div>
+        <div class="dist-row"><span>RAW-Gelände</span><span class="dbadge dg">10 min pieszo</span></div>
+        <div class="dist-row"><span>East Side Gallery</span><span class="dbadge dg">25 min pieszo</span></div>
+        <div class="dist-row"><span>Prater Garten</span><span class="dbadge dg">15 min pieszo</span></div>
+        <div class="dist-row"><span>Fernsehturm (Alex)</span><span class="dbadge dy">15 min tramwajem</span></div>
+        <div class="dist-row"><span>Brandenburger Tor</span><span class="dbadge dy">20 min S-Bahn</span></div>
+        <div class="dist-row"><span>Classic Remise (Moabit)</span><span class="dbadge dy">20 min autem</span></div>
+        <div class="dist-row"><span>Topografia Terroru</span><span class="dbadge dy">25 min S-Bahn</span></div>
+      </div>
+
+      <div class="info-card">
+        <h3>🚇 Transport w Berlinie</h3>
+        <p><strong>Bilet dzienny (AB):</strong> ~9€ — tramwaj + U-Bahn + S-Bahn</p>
+        <p><strong>Tramwaj 21 i M13</strong> zatrzymują się przy Stayery</p>
+        <p><strong>Bolt/Uber:</strong> tańszy niż taxi, działa sprawnie</p>
+        <p style="margin-top:0.5rem;">Auto zostaw przy Stayery (parking opłacony) — centrum wygodniejsze komunikacją.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>💻 Snowflake Berlin</h3>
+        <p><strong>Adres:</strong> Leipziger Platz 18, 10117 Berlin (Mitte)</p>
+        <p><strong>Typ:</strong> Engineering Hub — R&D office</p>
+        <p><strong>Lokalizacja:</strong> 5 min pieszo od Brandenburger Tor, ~25 min tramwajem od Stayery</p>
+        <p style="margin-top:0.5rem;">Jako pracownik możesz zapytać lokalny team o hot desk w piątek rano — biuro organizuje też eventy i przyjmuje gości.</p>
+        <div style="margin-top:0.7rem;">
+          <a class="link link-g" href="https://maps.google.com/?q=Leipziger+Platz+18,+10117+Berlin" target="_blank" style="font-size:0.78rem; padding:0.28rem 0.7rem;">📍 Snowflake na mapie</a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>🎟️ Fernsehturm</h3>
+        <p><strong>Cena:</strong> ~€25.50</p>
+        <p><strong>Rezerwacja online:</strong> ZALECANA — w piątek kolejki mogą być duże</p>
+        <p><strong>Godziny:</strong> 9:00–24:00</p>
+        <p><strong>Czas na szczycie:</strong> ~45–60 min</p>
+        <a href="https://tv-turm.de/en/tickets" target="_blank" style="display:block; margin-top:0.75rem; font-size:0.84rem;">🎟️ Zarezerwuj bilet →</a>
+      </div>
+
+      <div class="info-card">
+        <h3>🍽️ Co zjeść koniecznie</h3>
+        <ul>
+          <li><strong>Currywurst</strong> — Konnopke's (od 1930) lub Curry 36 w Kreuzbergu</li>
+          <li><strong>Döner warzywny</strong> — Mustafa's Gemüse Kebap (kolejka, ale legenda)</li>
+          <li><strong>Cinnamon roll</strong> — Zeit für Brot (poranny obowiązek)</li>
+          <li><strong>Piwo ogrodowe</strong> — Prater Garten (najstarszy beer garden w BER)</li>
+          <li><strong>Döner klasyczny</strong> — dowolna budka przy Boxi</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>💳 Pieniądze</h3>
+        <p>Berlin jest coraz bardziej <strong>bezgotówkowy</strong> — karty przyjmowane niemal wszędzie.</p>
+        <p style="margin-top:0.5rem;"><strong>Gotówka EUR (60–80€)</strong> przyda się na pchli targ i budki z jedzeniem.</p>
+        <p style="margin-top:0.5rem;"><strong>Pamiętaj:</strong> powiadom bank o wyjeździe zagranicznym przed wyjazdem!</p>
+      </div>
+
+      <div class="info-card">
+        <h3>🎵 Kluby — poziom wejściowy</h3>
+        <p><strong>Club der Visionäre</strong> — pomost nad kanałem, house, brak dress code, otwarte od ~18:00. Najlepszy start dla kogoś kto nie chce Berghaina. Kreuzberg/Treptow.</p>
+        <p style="margin-top:0.4rem;"><strong>OXI</strong> — Friedrichshain, 10 min od Stayery, inclusive, open-air taras, elektronika. Jeden z łatwiejszych doorów w mieście.</p>
+        <p style="margin-top:0.4rem;"><strong>Cassiopeia</strong> — RAW-Gelände, 10 min pieszo, bardziej bar niż klub, luźna atmosfera, live music.</p>
+        <p style="margin-top:0.4rem;"><strong>SO36</strong> (Kreuzberg) — legendarny od 1970s, punk/indie/alternatywa. Jeśli nie techno.</p>
+        <div style="margin-top:0.7rem; display:flex; flex-wrap:wrap; gap:0.4rem;">
+          <a class="link link-g" href="https://maps.google.com/?q=Club+der+Vision%C3%A4re+Berlin" target="_blank" style="font-size:0.76rem;">📍 Club der Visionäre</a>
+          <a class="link link-g" href="https://maps.google.com/?q=OXI+Club+Berlin" target="_blank" style="font-size:0.76rem;">📍 OXI</a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>📱 Szpiegowskie klimaty</h3>
+        <p>Berlin jest pełen miejsc kojarzonych z wywiadem i zimną wojną:</p>
+        <ul style="margin-top:0.4rem;">
+          <li><strong>Checkpoint Charlie</strong> — słynne przejście graniczne (turystyczne, ale klimatyczne)</li>
+          <li><strong>Topografia Terroru</strong> — Gestapo i SS</li>
+          <li><strong>East Side Gallery</strong> — mur jako symbol podziału</li>
+          <li><strong>Stasi Museum</strong> — dawna siedziba Ministerstwa Bezpieczeństwa NRD (Lichtenberg)</li>
+        </ul>
+        <div class="links" style="margin-top:0.7rem;">
+          <a class="link link-g" href="https://maps.google.com/?q=Checkpoint+Charlie+Berlin" target="_blank">📍 Checkpoint Charlie</a>
+          <a class="link link-g" href="https://maps.google.com/?q=Stasi+Museum+Berlin+Lichtenberg" target="_blank">📍 Stasi Museum</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ──────── CHECKLISTA ──────── -->
+  <section id="checklist" class="section">
+    <div class="day-hdr">
+      <h2>Checklista przed wyjazdem</h2>
+      <p class="sub">Odhaczaj na bieżąco — stan zachowuje się w przeglądarce</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:1rem;">📋 Do ogarnięcia przed czwartkiem rano</div>
+
+      <div class="cl-stats">
+        <span class="cl-done" id="done-txt">0 gotowe</span>
+        <span class="cl-left" id="left-txt">0 zostało</span>
+        <span style="color:var(--mid); font-size:0.84rem;" id="pct-txt">0%</span>
+      </div>
+      <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+
+      <div class="ci" id="ci0">
+        <input type="checkbox" id="c0" onchange="tick()">
+        <label for="c0">
+          <strong>Naklejka Umweltzone</strong><span class="req">konieczne</span>
+          <span class="note">Zamów na umweltplakette.de lub kup rano w Frankfurt (Oder). ~10€, 10 minut.</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci1">
+        <input type="checkbox" id="c1" onchange="tick()">
+        <label for="c1">
+          <strong>Zarezerwuj Fernsehturm</strong><span class="req">zalecane</span>
+          <span class="note">tv-turm.de — ~€25.50. Piątek południe = popularne. Kup online teraz.</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci2">
+        <input type="checkbox" id="c2" onchange="tick()">
+        <label for="c2">
+          Powiadom bank o wyjeździe do Niemiec
+          <span class="note">Aby karta nie była blokowana przy transakcjach w DE</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci3">
+        <input type="checkbox" id="c3" onchange="tick()">
+        <label for="c3">
+          Gotówka EUR (60–80€)
+          <span class="note">Na pchli targ, Currywurst, budki z jedzeniem</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci4">
+        <input type="checkbox" id="c4" onchange="tick()">
+        <label for="c4">
+          Sprawdź ważność dowodu osobistego
+          <span class="note">Niemcy = Schengen, wystarczy dowód. Musi być ważny.</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci5">
+        <input type="checkbox" id="c5" onchange="tick()">
+        <label for="c5">
+          Pobierz mapy offline Berlin
+          <span class="note">Google Maps lub Maps.me — przed wyjazdem, na WiFi</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci6">
+        <input type="checkbox" id="c6" onchange="tick()">
+        <label for="c6">
+          Naładuj powerbank
+          <span class="note">Długie dni bez gniazdka</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci7">
+        <input type="checkbox" id="c7" onchange="tick()">
+        <label for="c7">
+          Tankuj do pełna wyjeżdżając z Warszawy
+          <span class="note">Paliwo DE ~2.30 PLN/L droższe niż PL</span>
+        </label>
+      </div>
+
+      <div class="ci" id="ci8">
+        <input type="checkbox" id="c8" onchange="tick()">
+        <label for="c8">
+          Stayery: check Booking ID #LGTHGUKH ✅
+          <span class="note">Potwierdzenie mailem · kod wejścia dzień przed · city tax €16.21 gotówką</span>
+        </label>
+      </div>
+
+      <button class="clear-btn" onclick="clearAll()">↺ Wyczyść checklistę</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>Berlin · czerwiec 2026 · Viel Spaß, Mikołaj! 🐻</footer>
+
+<script>
+  const TOTAL = 9;
+  const KEY = 'berlin2026';
+
+  function show(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function tick() {
+    const checked = [];
+    for (let i = 0; i < TOTAL; i++) {
+      const cb = document.getElementById('c' + i);
+      const row = document.getElementById('ci' + i);
+      if (cb.checked) { checked.push(i); row.classList.add('done'); }
+      else row.classList.remove('done');
+    }
+    try { localStorage.setItem(KEY, JSON.stringify(checked)); } catch(e) {}
+    const d = checked.length, l = TOTAL - d, p = Math.round(d / TOTAL * 100);
+    document.getElementById('done-txt').textContent = d + ' gotowe';
+    document.getElementById('left-txt').textContent = l + ' zostało';
+    document.getElementById('pct-txt').textContent = p + '%';
+    document.getElementById('pbar').style.width = p + '%';
+  }
+
+  function clearAll() {
+    for (let i = 0; i < TOTAL; i++) document.getElementById('c' + i).checked = false;
+    try { localStorage.removeItem(KEY); } catch(e) {}
+    tick();
+  }
+
+  // load saved state
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+    saved.forEach(i => { const cb = document.getElementById('c' + i); if (cb) cb.checked = true; });
+  } catch(e) {}
+  tick();
+</script>
+</body>
+</html>
